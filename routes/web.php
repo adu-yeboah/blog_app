@@ -16,6 +16,16 @@ Route::get("/", function () {
     ]);
 });
 
+Route::get("/gallery", function() {
+    return Inertia::render("main/Gallery");
+});
+
+
+Route::get("/contact", function() {
+    return Inertia::render("main/Contact");
+});
+
+
 // message routes
 Route::prefix("message")->group(function () {
     Route::get("/", [MessageController::class, "index"])->name("message.index");

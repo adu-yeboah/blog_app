@@ -1,7 +1,16 @@
 import React from 'react'
+import Navbar from '../../components/Navbar'
+import { Hero } from '../../components/ui/Hero'
+import { Footer } from '../../components/ui/Footer'
+import { NewsletterSection } from '../../components/NewsLetter'
 
-export default function Index({message}) {
+export default function Index() {
   return (
-    <div className="text-2xl text-black">{message}</div>
+    <>
+      <Navbar />
+      <Hero />
+      <NewsletterSection />
+      <Footer />
+    </>
   )
 }
