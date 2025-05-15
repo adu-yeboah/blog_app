@@ -10,6 +10,10 @@ use Inertia\Inertia;
 // });
 
 
+Route::get("/dashboard", function() {
+        return Inertia::render("admin/Dashboard");
+});
+
 Route::get("/", function () {
     return Inertia::render("main/Home", [
         "message" => "hello",
@@ -19,7 +23,6 @@ Route::get("/", function () {
 Route::get("/gallery", function() {
     return Inertia::render("main/Gallery");
 });
-
 
 Route::get("/contact", function() {
     return Inertia::render("main/Contact");
