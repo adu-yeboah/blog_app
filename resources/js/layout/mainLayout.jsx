@@ -7,7 +7,7 @@ export default function MainLayout({ children }) {
   return (
     <>
       <Navbar />
-      <main>
+      <main className='pt-[50px]'>
         {children}
       </main>
       <Footer />

@@ -7,11 +7,11 @@ export const NewsletterSection = () => {
             <p className="text-lg mb-6 max-w-2xl mx-auto">
                 Subscribe to my newsletter for exclusive Ghana travel tips, destination guides, and cultural insights delivered straight to your inbox.
             </p>
-            <div className="flex justify-center mb-4">
+            <div className="flex justify-center gap-1 mb-4">
                 <input
                     type="email"
                     placeholder="Your email address"
-                    className="p-3 rounded-l-full text-black w-64 focus:outline-none"
+                    className="px-5 py-3 rounded-l-full bg-white text-black w-64 focus:outline-none"
                 />
                 <button className="bg-white text-green-600 font-semibold p-3 rounded-r-full hover:bg-gray-100">
                     Subscribe

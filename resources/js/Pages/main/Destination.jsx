@@ -2,9 +2,10 @@ import React from "react";
 import MainLayout from "../../layout/mainLayout";
 import { BlogCard } from "../../components/cards/BlogCard";
 import { blogPosts } from "../../constants/blog";
+import { DestinarionCard } from "../../components/cards/DestinationCard";
 
 
-export default function BlogSection() {
+export default function Destination() {
     const [filter, setFilter] = React.useState("All");
     const [currentPage, setCurrentPage] = React.useState(1);
     const postsPerPage = 2;
@@ -38,7 +39,7 @@ export default function BlogSection() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {blogPosts.map((blog, index) => (
-                            <BlogCard
+                            <DestinarionCard
                                 key={index}
                                 data={blog}
                             />

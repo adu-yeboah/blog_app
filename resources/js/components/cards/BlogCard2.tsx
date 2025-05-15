@@ -1,17 +1,12 @@
 import { Link } from "@inertiajs/react";
-import { CalendarDays, MapPin, Star } from "lucide-react";
+import { CalendarDays, LocateFixed, MapIcon, MapPin, Star } from "lucide-react";
 import React from "react";
-import { motion } from "motion/react"
 
-
-export const BlogCard = ({ data }) => {
+export const BlogCard2 = ({ data }) => {
   return (
-    <motion.div className="max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden h-full flex flex-col"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}>
+    <div className="mx-auto bg-white shadow-lg rounded-lg overflow-hidden w-[700px] h-full flex flex-row">
       {/* Image Section */}
-      <div className="w-full h-48">
+      <div className="w-72 h-48">
         {data.images && data.images[0] ? (
           <img
             src={data.images[0]}
@@ -26,7 +21,7 @@ export const BlogCard = ({ data }) => {
       </div>
 
       {/* Content Section */}
-      <div className="flex-1 p-4 flex flex-col">
+      <div className="flex-1 p-4 flex flex-col w-full">
         <p className="text-gray-500 text-sm mb-2 flex flex-row gap-1"><CalendarDays size={20} />{data.date}</p>
         <h3 className="text-xl font-semibold text-gray-800 mb-2">{data.title}</h3>
         <p className="text-gray-700 mb-3 flex-1 line-clamp-2">{data.description}</p>
@@ -45,6 +40,6 @@ export const BlogCard = ({ data }) => {
           Read more →
         </Link>
       </div>
-    </motion.div>
+    </div>
   );
 };

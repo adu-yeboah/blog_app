@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react'
 import React from 'react'
 
 export const Hero = () => {
@@ -8,12 +9,12 @@ export const Hero = () => {
                 Explore the rich culture, breathtaking landscapes, and warm hospitality of the Gold Coast.
             </p>
             <div className="flex space-x-4">
-                <button className="bg-white text-green-700 font-semibold py-2 px-6 rounded-full hover:bg-gray-100">
+                <Link href="/destination" className="bg-white text-green-700 font-semibold py-2 px-6 rounded-full hover:bg-gray-100">
                     Explore Destinations
-                </button>
-                <button className="bg-transparent border border-white text-white font-semibold py-2 px-6 rounded-full hover:bg-white hover:text-green-700">
+                </Link>
+                <Link href="/blog" className="bg-transparent border border-white text-white font-semibold py-2 px-6 rounded-full hover:bg-white hover:text-green-700">
                     Read Blog
-                </button>
+                </Link>
             </div>
         </div>
     )
