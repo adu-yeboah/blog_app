@@ -5,11 +5,13 @@ import Topbar from '../components/Topbar'
 export default function AdminLayout({ children }) {
     return (
         <>
-          <Sidebar/>
-            <Topbar />
-            <main className='ml-[180px] bg-gray-200 h-full'>
-                {children}
-            </main>
+            <div className='bg-gray-200 min-h-[100vh]'>
+                <Sidebar />
+                <Topbar />
+                <main className='ml-[180px] '>
+                    {children}
+                </main>
+            </div>
         </>
     )
 }

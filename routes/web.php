@@ -10,8 +10,21 @@ use Inertia\Inertia;
 // });
 
 
-Route::get("/dashboard", function() {
+
+// Admin Routes
+Route::prefix("admin")->group(function () {
+    Route::get("/dashboard", function () {
         return Inertia::render("admin/Dashboard");
+    });
+    Route::get("/blog", function () {
+        return Inertia::render("admin/Blogs");
+    });
+    Route::get("/destination", function () {
+        return Inertia::render("admin/Destinations");
+    });
+    Route::get("/message", function () {
+        return Inertia::render("admin/Messages");
+    });
 });
 
 Route::get("/", function () {
@@ -20,11 +33,11 @@ Route::get("/", function () {
     ]);
 });
 
-Route::get("/gallery", function() {
+Route::get("/gallery", function () {
     return Inertia::render("main/Gallery");
 });
 
-Route::get("/contact", function() {
+Route::get("/contact", function () {
     return Inertia::render("main/Contact");
 });
 
