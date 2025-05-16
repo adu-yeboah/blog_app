@@ -19,8 +19,14 @@ Route::prefix("admin")->group(function () {
     Route::get("/blog", function () {
         return Inertia::render("admin/Blogs");
     });
+    Route::get("/blog/add", function () {
+        return Inertia::render("admin/Blog");
+    });
     Route::get("/destination", function () {
         return Inertia::render("admin/Destinations");
+    });
+    Route::get("/destination/add", function () {
+        return Inertia::render("admin/Destination");
     });
     Route::get("/message", function () {
         return Inertia::render("admin/Messages");

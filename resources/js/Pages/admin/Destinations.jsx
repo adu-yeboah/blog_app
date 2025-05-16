@@ -10,7 +10,7 @@ export default function Destinations() {
     <AdminLayout>
       <div className="m-6">
         <Head title={"Destinations"} />
-        <Table columns={destinationColumn} data={blogPosts} />
+        <Table columns={destinationColumn} data={blogPosts} title={"destination"} />
       </div>
     </AdminLayout>
   )

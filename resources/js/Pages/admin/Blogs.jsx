@@ -10,7 +10,7 @@ export default function Blogs() {
     <AdminLayout>
       <div className="m-6">
         <Head title={"Blogs"}/>
-        <Table columns={blogColumn} data={blogPosts} />
+        <Table columns={blogColumn} data={blogPosts} title={"blog"} />
       </div>
     </AdminLayout>
   )
