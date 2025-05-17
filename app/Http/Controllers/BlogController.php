@@ -68,46 +68,43 @@ class BlogController extends Controller
     }
 
     // Show a specific blog post
-    public function show(Blog $blogPost)
+    public function show(Blog $blog)
     {
         return Inertia::render('Main/Blog', [
             'post' => [
-                'id' => $blogPost->id,
-                'title' => $blogPost->title,
-                'date' => $blogPost->date,
-                'description' => $blogPost->description,
-                'category' => $blogPost->category,
-                'rating' => $blogPost->rating,
-                'location' => $blogPost->location,
-                'images' => $blogPost->images->pluck('path'),
+                'id' => $blog->id,
+                'title' => $blog->title,
+                'date' => $blog->date,
+                'description' => $blog->description,
+                'category' => $blog->category,
+                'rating' => $blog->rating,
+                'location' => $blog->location,
+                'images' => $blog->images->pluck('path'),
             ],
         ]);
     }
 
     // Update a blog post
-    public function edit(Blog $blogPost)
+    public function edit(Blog $blog)
     {
         return Inertia::render('main/Blog', [
             'post' => [
-                'id' => $blogPost->id,
-                'title' => $blogPost->title,
-                'date' => $blogPost->date,
-                'description' => $blogPost->description,
-                'category' => $blogPost->category,
-                'rating' => $blogPost->rating,
-                'location' => $blogPost->location,
-                'images' => $blogPost->images->pluck('path'),
+                'id' => $blog->id,
+                'title' => $blog->title,
+                'date' => $blog->date,
+                'description' => $blog->description,
+                'category' => $blog->category,
+                'rating' => $blog->rating,
+                'location' => $blog->location,
+                'images' => $blog->images->pluck('path'),
             ],
         ]);
     }
 
 
     // Update a blog post
-    public function update(Request $request, Blog $blogPost)
+    public function update(Request $request, Blog $blog)
     {
-        if ($blogPost->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized');
-        }
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -120,8 +117,7 @@ class BlogController extends Controller
             'images.*' => 'file|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Update the blog post
-        $blogPost->update([
+        $blog->update([
             'title' => $validated['title'],
             'date' => $validated['date'],
             'description' => $validated['description'],
@@ -133,7 +129,7 @@ class BlogController extends Controller
         // Handle new images if provided
         if ($request->hasFile('images')) {
             // Optionally delete old images
-            foreach ($blogPost->images as $image) {
+            foreach ($blog->images as $image) {
                 Storage::disk('public')->delete($image->path);
                 $image->delete();
             }
@@ -142,7 +138,7 @@ class BlogController extends Controller
             foreach ($validated['images'] as $image) {
                 $path = $image->store('blog_images', 'public');
                 BlogImage::create([
-                    'blog_post_id' => $blogPost->id,
+                    'blog_post_id' => $blog->id,
                     'path' => $path,
                 ]);
             }
@@ -153,14 +149,14 @@ class BlogController extends Controller
 
 
     // Delete a blog post
-    public function destroy(Blog $blogPost)
+    public function destroy(Blog $blog)
     {
-        foreach ($blogPost->images as $image) {
+        foreach ($blog->images as $image) {
             Storage::disk('public')->delete($image->path);
             $image->delete();
         }
 
-        $blogPost->delete();
+        $blog->delete();
 
         return redirect()->route('blog.index')->with('success', 'Blog post deleted successfully!');
     }
