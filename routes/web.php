@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -31,6 +32,9 @@ Route::prefix("admin")->group(function () {
     Route::get("/message", function () {
         return Inertia::render("admin/Messages");
     });
+    Route::get("/utils", function () {
+        return Inertia::render("admin/Utils");
+    });
 });
 
 Route::get("/", function () {
@@ -45,6 +49,13 @@ Route::get("/gallery", function () {
 
 Route::get("/contact", function () {
     return Inertia::render("main/Contact");
+});
+
+// Authentication Routes
+Route::prefix("auth")->group(function () {
+    Route::get("/login", [UserController::class, "index"])->name("auth.index");
+    Route::post("/login", [UserController::class, "store"])->name("auth.store");
+    Route::post("/logout", [UserController::class, "destory"])->name("auth.destory");
 });
 
 

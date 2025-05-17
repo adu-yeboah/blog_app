@@ -4,3 +4,7 @@
 html {
     overlay: hidden;
 }
+
+button {
+    cursor: pointer;
+}

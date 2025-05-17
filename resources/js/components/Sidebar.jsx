@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from '@inertiajs/react';
-import { LayoutDashboard, LogOutIcon, MapPinHouse, MessageCircleMore, Newspaper } from 'lucide-react';
+import { LayoutDashboard, LogOutIcon, MapPinHouse, MessageCircleMore, Newspaper, UnfoldVertical } from 'lucide-react';
 
 export default function Sidebar() {
     return (
@@ -39,6 +39,12 @@ export default function Sidebar() {
                     <Link href="/admin/message" className="flex flex-row gap-1.5 items-center w-full">
                         <MessageCircleMore size={17} />
                         <span>Message</span>
+                    </Link>
+                </li>
+                <li className="text-md text-white flex flex-row gap-1.5 items-center hover:bg-green-700 p-2 rounded w-full">
+                    <Link href="/admin/utils" className="flex flex-row gap-1.5 items-center w-full">
+                        <UnfoldVertical size={17} />
+                        <span>Utils</span>
                     </Link>
                 </li>
                 <li className="text-md text-white flex flex-row gap-1.5 items-center hover:bg-green-700 p-2 rounded w-full">

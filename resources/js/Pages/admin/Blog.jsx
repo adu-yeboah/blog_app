@@ -3,14 +3,14 @@ import { useForm } from '@inertiajs/inertia-react';
 import AdminLayout from '../../layout/adminLayout';
 import Head from '../../components/ui/Head';
 
-const Blog = ({ errors }) => {
-  // Initialize Inertia form with default values
-  const { data, setData, post, processing, reset } = useForm({
+const Blog = () => {
+
+  const { data, setData, post, processing, reset, errors } = useForm({
     title: '',
     date: '',
     description: '',
     category: '',
-    images: [], // Will hold File objects
+    images: [], 
     rating: '',
     location: '',
   });
@@ -25,11 +25,6 @@ const Blog = ({ errors }) => {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setData('images', [...data.images, ...files]);
-  };
-
-  // Add a new image input field (for multiple file selections)
-  const addImageField = () => {
-    // No need to add fields manually; multiple files are handled by the file input
   };
 
   // Remove an image file
@@ -66,13 +61,14 @@ const Blog = ({ errors }) => {
     // Submit form using Inertia.js
     post('/blog-posts', {
       onSuccess: () => {
-        reset(); // Reset form after successful submission
+        reset(); 
         alert('Blog post created successfully!');
       },
       onError: (errors) => {
         console.log('Errors:', errors);
       },
     });
+    
   };
 
   return (
@@ -91,7 +87,7 @@ const Blog = ({ errors }) => {
                     name="title"
                     value={data.title}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 outline-0 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Enter blog title"
                   />
                   {errors?.title && <p className="text-red-600 text-sm">{errors.title}</p>}
@@ -105,7 +101,7 @@ const Blog = ({ errors }) => {
                     name="date"
                     value={data.date}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 outline-0 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     placeholder="e.g., June 15, 2023"
                   />
                   {errors?.date && <p className="text-red-600 text-sm">{errors.date}</p>}
@@ -118,7 +114,7 @@ const Blog = ({ errors }) => {
                     name="description"
                     value={data.description}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 outline-0 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     rows="4"
                     placeholder="Write a brief description of the blog post"
                   />
@@ -132,7 +128,7 @@ const Blog = ({ errors }) => {
                     name="category"
                     value={data.category}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 outline-0 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                   >
                     <option value="">Select a category</option>
                     <option value="History">History</option>
@@ -150,7 +146,7 @@ const Blog = ({ errors }) => {
                     type="file"
                     multiple
                     onChange={handleImageChange}
-                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 outline-0 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                   />
                   {data.images.length > 0 && (
                     <div className="mt-2 space-y-2 cursor-pointer">
@@ -178,7 +174,7 @@ const Blog = ({ errors }) => {
                     name="rating"
                     value={data.rating}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 outline-0 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     placeholder="e.g., 4.5"
                     step="0.1"
                     min="0"
@@ -195,7 +191,7 @@ const Blog = ({ errors }) => {
                     name="location"
                     value={data.location}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 outline-0 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     placeholder="e.g., Accra, Greater Accra Region, Ghana"
                   />
                   {errors?.location && <p className="text-red-600 text-sm">{errors.location}</p>}

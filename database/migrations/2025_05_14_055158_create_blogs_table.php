@@ -13,11 +13,21 @@ return new class extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->string("title");
-            $table->text("description");
-            $table->unsignedDecimal("rate", 2,1)->default(0);
-            $table->string("location");
-            $table->json("images");
+            $table->string('title');
+            $table->string('date');
+            $table->text('description');
+            $table->string('category');
+            $table->decimal('rating', 3, 1);
+            $table->string('location');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+        });
+
+        Schema::create('blog_images', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('blog_post_id')->constrained()->onDelete('cascade');
+            $table->string('path');
             $table->timestamps();
         });
     }

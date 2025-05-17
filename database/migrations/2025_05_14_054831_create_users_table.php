@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -17,6 +19,13 @@ return new class extends Migration
             $table->string("password")->default("admin");
             $table->timestamps();
         });
+
+        DB::table('users')->insert([
+            'username' => 'admin',
+            'password' => Hash::make('password123'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**
