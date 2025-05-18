@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilsController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,8 @@ Route::prefix("admin")->group(function () {
     Route::get("/utils", function () {
         return Inertia::render("admin/Utils");
     });
+    Route::get('/newsletter', [NewsletterController::class, 'index'])->name('newsletter.index');
+    Route::post('/newsletter/send', [NewsletterController::class, 'send'])->name('newsletter.send');
 });
 
 Route::get("/", function () {
@@ -79,6 +82,11 @@ Route::prefix("blog")->group(function () {
 
 // Utils Routes
 Route::prefix("utils")->group(function () {
-    Route::post("/", [UtilsController::class, "store"])->name("utils.store");
     Route::put("/", [UtilsController::class, "update"])->name("utils.update");
 });
+
+// Newsletter Routes
+Route::get('/newsletter/subscribe', [NewsletterController::class, 'subscribeForm'])->name('newsletter.subscribe.form');
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::get('/newsletter/verify/{hash}', [NewsletterController::class, 'verify'])->name('newsletter.verify');
+Route::get('/newsletter/unsubscribe/{hash}', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
