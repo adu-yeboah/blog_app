@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\UserController;
@@ -15,7 +16,7 @@ use Inertia\Inertia;
 
 
 // Admin Routes
-Route::prefix("admin")->group(function () {
+Route::prefix("admin")->middleware("auth")->group(function () {
     Route::get("/dashboard", function () {
         return Inertia::render("admin/Dashboard");
     });
@@ -77,6 +78,15 @@ Route::prefix("blog")->group(function () {
     Route::get("/{id}", [BlogController::class, "show"])->name("blog.show");
     Route::put("/{id}", [BlogController::class, "update"])->name("blog.update");
     Route::delete("/{id}", [BlogController::class, "destory"])->name("blog.store");
+});
+
+//
+Route::prefix("destination")->group(function () {
+    Route::get("/", [DestinationController::class, "index"])->name("destination.index");
+    Route::post("/create", [DestinationController::class, "store"])->name("destination.store");
+    Route::get("/{id}", [DestinationController::class, "show"])->name("destination.show");
+    Route::put("/{id}", [DestinationController::class, "update"])->name("destination.update");
+    Route::delete("/{id}", [DestinationController::class, "destory"])->name("destination.store");
 });
 
 

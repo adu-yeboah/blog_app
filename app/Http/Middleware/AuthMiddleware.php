@@ -21,12 +21,11 @@ class AuthMiddleware
             if (Auth::user()) {
 
                 return $next($request);
-
             }
 
         } else {
 
-            return redirect('/')->with('message', 'logged in');
+            return redirect('/auth/login')->with('message', 'logged in');
 
         }
         return $next($request);

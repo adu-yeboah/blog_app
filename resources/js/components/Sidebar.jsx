@@ -1,9 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import { LayoutDashboard, LogOutIcon, MapPinHouse, MessageCircleMore, Newspaper, NewspaperIcon, UnfoldVertical } from 'lucide-react';
 
 export default function Sidebar() {
+    const {post} = useForm()
+    const handleLogout = () => {
+        post("/auth/logout")
+    }
     return (
         <motion.div 
             className="fixed w-[180px] h-full flex flex-col bg-green-800"
@@ -54,10 +58,10 @@ export default function Sidebar() {
                     </Link>
                 </li>
                 <li className="text-md text-white flex flex-row gap-1.5 items-center hover:bg-green-700 p-2 rounded w-full">
-                    <Link href="/logout" method="post" as="button" className="flex flex-row gap-1.5 items-center w-full">
+                    <button onClick={handleLogout} as="button" className="flex flex-row gap-1.5 items-center w-full">
                         <LogOutIcon size={17} />
                         <span>Logout</span>
-                    </Link>
+                    </button>
                 </li>
             </ul>
         </motion.div>

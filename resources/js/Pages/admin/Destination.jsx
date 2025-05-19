@@ -1,7 +1,7 @@
 import React from 'react';
-import { useForm } from '@inertiajs/inertia-react';
 import AdminLayout from '../../layout/adminLayout';
 import Head from '../../components/ui/Head';
+import { useForm } from '@inertiajs/react';
 
 const CreateDestination = () => {
   const { data, setData, post, processing, reset, errors } = useForm({
@@ -38,12 +38,7 @@ const CreateDestination = () => {
       alert('Rating must be a number between 0 and 5.');
       return;
     }
-    post('/destinations', {
-      onSuccess: () => {
-        reset();
-        alert('Destination created successfully!');
-      },
-    });
+    post('/destination/create');
   };
 
   return (
@@ -65,6 +60,7 @@ const CreateDestination = () => {
                 />
                 {errors.title && <p className="text-red-600 text-sm">{errors.title}</p>}
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700">Rating (0-5)</label>
                 <input

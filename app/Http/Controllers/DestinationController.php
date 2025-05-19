@@ -15,7 +15,7 @@ class DestinationController extends Controller
     // Display a list of destinations
     public function index()
     {
-        $destinations = Destination::with('images')->where('user_id', Auth::id())->get();
+        $destinations = Destination::with('images')->get();
         return Inertia::render('Destination/Index', [
             'destinations' => $destinations->map(function ($destination) {
                 return [
@@ -30,11 +30,6 @@ class DestinationController extends Controller
         ]);
     }
 
-    // Show the form for creating a new destination
-    public function create()
-    {
-        return Inertia::render('Destination/Create');
-    }
 
     // Store a newly created destination
     public function store(Request $request)
@@ -54,7 +49,6 @@ class DestinationController extends Controller
             'rating' => $validated['rating'],
             'description' => $validated['description'],
             'location' => $validated['location'],
-            'user_id' => Auth::id(),
         ]);
 
         // Store images
@@ -66,15 +60,12 @@ class DestinationController extends Controller
             ]);
         }
 
-        return redirect()->route('destination.index')->with('success', 'Destination created successfully!');
+        return inertia("admin/Destinations")->with('success', 'Destination created successfully!');
     }
 
     // Show a specific destination
     public function show(Destination $destination)
     {
-        if ($destination->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized');
-        }
 
         return Inertia::render('Destination/Show', [
             'destination' => [
@@ -91,10 +82,6 @@ class DestinationController extends Controller
     // Show the form for editing a destination
     public function edit(Destination $destination)
     {
-        if ($destination->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized');
-        }
-
         return Inertia::render('Destination/Edit', [
             'destination' => [
                 'id' => $destination->id,
@@ -110,9 +97,6 @@ class DestinationController extends Controller
     // Update a destination
     public function update(Request $request, Destination $destination)
     {
-        if ($destination->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized');
-        }
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -155,10 +139,7 @@ class DestinationController extends Controller
     // Delete a destination
     public function destroy(Destination $destination)
     {
-        if ($destination->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized');
-        }
-
+    
         // Delete associated images from storage and database
         foreach ($destination->images as $image) {
             Storage::disk('public')->delete($image->path);

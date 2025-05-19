@@ -43,7 +43,7 @@ class BlogController extends Controller
             'rating' => 'required|numeric|min:0|max:5',
             'location' => 'required|string|max:255',
             'images' => 'required|array|min:1',
-            'images.*' => 'file|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB max per image
+            'images.*' => 'file|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
         $post = Blog::create([
@@ -59,7 +59,8 @@ class BlogController extends Controller
         foreach ($validated['images'] as $image) {
             $path = $image->store('blog_images', 'public');
             BlogImage::create([
-                'blog_post_id' => $post->id,
+                'user_id' => Auth::id(),
+                'blog_id' => $post->id,
                 'path' => $path,
             ]);
         }

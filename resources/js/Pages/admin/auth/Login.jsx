@@ -11,7 +11,7 @@ export default function LoginPage() {
 
     function submit(e) {
         e.preventDefault()
-        post('auth/login')
+        post('/auth/login')
     }
 
     return (

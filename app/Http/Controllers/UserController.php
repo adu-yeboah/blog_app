@@ -23,7 +23,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credentails)) {
             $request->session()->regenerate();
-            return inertia("/admin/dashboard");
+            return inertia("admin/Dashboard");
         };
 
         return back()->withErrors([

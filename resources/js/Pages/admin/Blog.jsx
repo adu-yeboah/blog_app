@@ -1,7 +1,7 @@
 import React from 'react';
-import { useForm } from '@inertiajs/inertia-react';
 import AdminLayout from '../../layout/adminLayout';
 import Head from '../../components/ui/Head';
+import { useForm } from '@inertiajs/react';
 
 const Blog = () => {
 
@@ -58,8 +58,7 @@ const Blog = () => {
       return;
     }
 
-    // Submit form using Inertia.js
-    post('/blog-posts', {
+    post('/blog/create', {
       onSuccess: () => {
         reset(); 
         alert('Blog post created successfully!');
