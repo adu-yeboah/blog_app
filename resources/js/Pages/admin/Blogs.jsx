@@ -5,12 +5,13 @@ import { blogColumn } from '../../constants/blogTable'
 import { blogPosts } from '../../constants/blog'
 import Head from '../../components/ui/Head'
 
-export default function Blogs() {
+export default function Blogs({ blogs }) {
+  
   return (
     <AdminLayout>
       <div className="m-6">
         <Head title={"Blogs"}/>
-        <Table columns={blogColumn} data={blogPosts} title={"blog"} />
+        <Table columns={blogColumn} data={blogs} title={"blog"} />
       </div>
     </AdminLayout>
   )

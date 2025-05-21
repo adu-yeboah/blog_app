@@ -1,10 +1,13 @@
-import { Link } from '@inertiajs/react';
-import React, { useState } from 'react';
+import { Link, router, useForm } from '@inertiajs/react';
+import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 
 export default function Table({ columns, data, title }) {
     // State to manage table data (since props are immutable)
-    const [_data, setData] = useState(data);
+    const { get, setData, delete: destory, } = useForm({
+        ids: []
+    });
+    const [_data, set_Data] = useState(data);
     const [selectedRows, setSelectedRows] = useState([]);
     const [clearSelectedRows, setClearSelectedRows] = useState(false);
 
@@ -61,10 +64,19 @@ export default function Table({ columns, data, title }) {
         },
     };
 
+    // Handle row click to navigate to show page
+    const handleRowClick = (row) => {
+        get(`/admin/${title}/${row.id}`);
+    };
+
     // Handle row selection
     const handleRowSelection = ({ selectedRows }) => {
         setSelectedRows(selectedRows);
     };
+
+    useEffect(() => {
+        setData('ids', [selectedRows.map((row) => row.id)])
+    }, [selectedRows])
 
     // Handle delete functionality
     const handleDelete = () => {
@@ -73,14 +85,19 @@ export default function Table({ columns, data, title }) {
             return;
         }
 
-        const selectedRowIds = selectedRows.map((row) => row.id);
-        const updatedData = data.filter((row) => !selectedRowIds.includes(row.id));
-
-        setData(updatedData);
-        setClearSelectedRows(!clearSelectedRows);
-        setSelectedRows([]);
+        destory(`/${title}/bulk`, {
+            onSuccess: () => {
+                set_Data((prevData) => prevData.filter((row) => !selectedRowIds.includes(row.id)));
+                setClearSelectedRows(!clearSelectedRows);
+                setSelectedRows([]);
+                alert(`Selected ${title} posts deleted successfully!`);
+            },
+            onError: (errors) => {
+                console.log('Delete error:', errors);
+                alert(`Failed to delete ${title} posts. Please try again.`);
+            },
+        });
     };
-
 
     return (
         <div className="p-4">
@@ -97,14 +114,16 @@ export default function Table({ columns, data, title }) {
                     Delete Selected ({selectedRows.length})
                 </button>
 
-                {title?
+                {title ? (
                     <Link
                         href={`/admin/${title}/add`}
-                        className='px-4 py-2 rounded-md text-white font-medium bg-green-900'
+                        className="px-4 py-2 rounded-md text-white font-medium bg-green-900"
                     >
                         Create
-                    </Link> : ""
-                }
+                    </Link>
+                ) : (
+                    ''
+                )}
             </div>
 
             {/* DataTable */}
@@ -119,6 +138,8 @@ export default function Table({ columns, data, title }) {
                 selectableRows
                 onSelectedRowsChange={handleRowSelection}
                 clearSelectedRows={clearSelectedRows}
+                onRowClicked={handleRowClick}
+                pointerOnHover
             />
         </div>
     );

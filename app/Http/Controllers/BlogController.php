@@ -43,7 +43,7 @@ class BlogController extends Controller
             'rating' => 'required|numeric|min:0|max:5',
             'location' => 'required|string|max:255',
             'images' => 'required|array|min:1',
-            'images.*' => 'file|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            'images.*' => 'file|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $post = Blog::create([
@@ -71,8 +71,8 @@ class BlogController extends Controller
     // Show a specific blog post
     public function show(Blog $blog)
     {
-        return Inertia::render('Main/Blog', [
-            'post' => [
+        return Inertia::render('main/Blog', [
+            'blogData' => [
                 'id' => $blog->id,
                 'title' => $blog->title,
                 'date' => $blog->date,
@@ -149,16 +149,31 @@ class BlogController extends Controller
     }
 
 
-    // Delete a blog post
-    public function destroy(Blog $blog)
+    //Bluck Destory
+    public function bulkDestroy(Request $request)
     {
-        foreach ($blog->images as $image) {
-            Storage::disk('public')->delete($image->path);
-            $image->delete();
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:blogs,id',
+        ]);
+
+        try {
+            // Fetch blogs with their images
+            $blogs = Blog::whereIn('id', $request->ids)->with('images')->get();
+
+            foreach ($blogs as $blog) {
+                // Delete associated images
+                foreach ($blog->images as $image) {
+                    Storage::disk('public')->delete($image->path);
+                    $image->delete();
+                }
+
+                $blog->delete();
+            }
+
+            return response()->json(['success' => 'Blog posts deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to delete blog posts'], 500);
         }
-
-        $blog->delete();
-
-        return redirect()->route('blog.index')->with('success', 'Blog post deleted successfully!');
     }
 }

@@ -5,12 +5,12 @@ import Table from '../../components/Table'
 import { destinationColumn } from '../../constants/destinationTable'
 import { blogPosts } from '../../constants/blog'
 
-export default function Destinations() {
+export default function Destinations({ destinations }) {
   return (
     <AdminLayout>
       <div className="m-6">
         <Head title={"Destinations"} />
-        <Table columns={destinationColumn} data={blogPosts} title={"destination"} />
+        <Table columns={destinationColumn} data={destinations} title={"destination"} />
       </div>
     </AdminLayout>
   )

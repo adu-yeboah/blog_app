@@ -15,6 +15,6 @@ class Utils extends Model
         'linkedin',
         'instagram',
         'twitter',
-        'image',
+        'coverImage',
     ];
 }

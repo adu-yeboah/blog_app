@@ -139,7 +139,7 @@ class DestinationController extends Controller
     // Delete a destination
     public function destroy(Destination $destination)
     {
-    
+
         // Delete associated images from storage and database
         foreach ($destination->images as $image) {
             Storage::disk('public')->delete($image->path);
@@ -149,5 +149,36 @@ class DestinationController extends Controller
         $destination->delete();
 
         return redirect()->route('destination.index')->with('success', 'Destination deleted successfully!');
+    }
+
+    //Bluck Destory
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:destinations,id',
+        ]);
+
+        try {
+            // Fetch blogs with their images
+            $destinations = Destination::whereIn('id', $request->ids)->with('images')->get();
+            foreach ($destinations as $destination) {
+                // Delete associated images
+                if (!$destination->images) {
+                    return null;
+                }
+                foreach ($destination->images as $image) {
+                    Storage::disk('public')->delete($image->path);
+                    $image->delete();
+                }
+
+                $destination->delete();
+            }
+
+            return ;
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to delete destination posts'], 500);
+        }
     }
 }

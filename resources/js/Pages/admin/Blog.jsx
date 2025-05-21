@@ -3,17 +3,23 @@ import AdminLayout from '../../layout/adminLayout';
 import Head from '../../components/ui/Head';
 import { useForm } from '@inertiajs/react';
 
-const Blog = () => {
+const Blog = ({ blogData }) => {
 
+  
+  if (blogData) {
+    setData(blogData)
+  }
   const { data, setData, post, processing, reset, errors } = useForm({
     title: '',
     date: '',
     description: '',
     category: '',
-    images: [], 
+    images: [],
     rating: '',
     location: '',
   });
+
+  
 
   // Handle input changes for text fields
   const handleInputChange = (e) => {
@@ -60,14 +66,14 @@ const Blog = () => {
 
     post('/blog/create', {
       onSuccess: () => {
-        reset(); 
+        reset();
         alert('Blog post created successfully!');
       },
       onError: (errors) => {
         console.log('Errors:', errors);
       },
     });
-    
+
   };
 
   return (

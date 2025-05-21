@@ -3,13 +3,19 @@ import React, { useState } from "react";
 import AdminLayout from "../../layout/adminLayout";
 import { useForm } from "@inertiajs/react";
 
-export default function Utils() {
+export default function Utils({ Utils }) {
 
+
+  if (Utils) {
+    setData(Utils)
+  }
+  console.log(Utils);
 
   // State for user data
   const { data, setData, post, processing } = useForm({
-    about: "I'm a passionate developer with a love for creating innovative solutions.",
-    phone: "+1 (123) 456-7890",
+    about: "about here",
+    phone: "0000000000",
+    number: "000000000",
     location: "New York, NY",
     twitter: "@username",
     instagram: "@username",
@@ -28,12 +34,15 @@ export default function Utils() {
 
 
   // Handle cover image upload
+  const reader = new FileReader();
+
   const handleCoverImage = (e) => {
     const file = e.target.files[0];
+
     if (file) {
-      const reader = new FileReader();
       reader.onloadend = () => {
-        setData("coverImage", reader.result);        
+        setData("coverImage", file);
+
       };
       reader.readAsDataURL(file);
     }
@@ -41,11 +50,19 @@ export default function Utils() {
 
   // Save changes
   const saveChanges = (section) => {
+    post("/utils/store", {
+      onSuccess: () => {
+        alert('Utils post created successfully!');
+      },
+      onError: (errors) => {
+        console.log('Errors:', errors);
+      },
+    })
+
     console.log(data);
     if (section === 'about') {
       setIsEditingAbout(false);
     } else {
-
       setIsEditingContact(false);
     }
   };
@@ -57,6 +74,13 @@ export default function Utils() {
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           {/* Cover Image Section */}
           <div className="mb-6">
+            <button
+              onClick={() => saveChanges('image')}
+              className="bg-green-600 text-white px-4 py-2 self-end rounded-md hover:bg-green-700"
+            >
+              <Save className="w-5 h-5 inline-block mr-1" />
+              Save
+            </button>
             <div className="relative h-48 bg-gray-200 rounded-lg overflow-hidden">
               {data.coverImage ? (
                 <img src={data.coverImage} alt="Cover" className="w-full h-full object-cover" />
@@ -70,6 +94,7 @@ export default function Utils() {
                 Change Cover
                 <input type="file" className="hidden" accept="image/*" onChange={handleCoverImage} />
               </label>
+
             </div>
           </div>
 
@@ -159,6 +184,24 @@ export default function Utils() {
                   <input
                     type="text"
                     name="phone"
+                    value={data.number}
+                    onChange={handleInputChange}
+                    className="mt-1 w-full p-2 border outline-0 focus:border-green-800 rounded-md"
+                  />
+                ) : (
+                  <p className="mt-1 text-gray-600 flex items-center">
+                    <Phone className="w-5 h-5 mr-2" />
+                    {data.number}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Phone</label>
+                {isEditingContact ? (
+                  <input
+                    type="text"
+                    name="phone"
                     value={data.phone}
                     onChange={handleInputChange}
                     className="mt-1 w-full p-2 border outline-0 focus:border-green-800 rounded-md"
@@ -170,6 +213,7 @@ export default function Utils() {
                   </p>
                 )}
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700">Location</label>
                 {isEditingContact ? (
