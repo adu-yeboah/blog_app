@@ -45,7 +45,7 @@ Route::prefix("admin")->middleware("auth")->group(function () {
         $message = Message::get();
         return Inertia::render("admin/Messages", ['messages' => $message]);
     });
-    
+
     Route::get("/utils", function () {
         $utils = Utils::latest()->get();
         return Inertia::render("admin/Utils", ['utils' => $utils]);
@@ -55,8 +55,14 @@ Route::prefix("admin")->middleware("auth")->group(function () {
 });
 
 Route::get("/", function () {
+    $destination = Destination::latest()->take(5)->get();
+    $blogs = Blog::latest()->take(5)->get();
+    $utils = Utils::latest()->take(5)->get();
+
     return Inertia::render("main/Home", [
-        "message" => "hello",
+        "destinations" => $destination,
+        "blogs" => $blogs,
+        "about" => $utils,
     ]);
 });
 

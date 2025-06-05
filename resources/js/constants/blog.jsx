@@ -1,5 +1,6 @@
 export const blogPosts = [
-    {
+    {   
+        id: 1,
         title: "Confronting History: My Emotional Visit to Cape Coast Castle",
         date: "June 15, 2023",
         description: "Walking through the 'Door of No Return' at Cape Coast Castle was one of the most profound experiences of my travels. This UNESCO site tells the harrowing story of the transatlantic slave trade and Ghana's resilience.",
@@ -12,6 +13,7 @@ export const blogPosts = [
         location: "Cape Coast, Central Region, Ghana"
     },
     {
+        id: 2,
         title: "Safari in Ghana: Spotting Elephants at Mole National Park",
         date: "April 12, 2023",
         description: "Ghana's answer to the African safari experience, Mole National Park offers walking safaris where you can get surprisingly close to elephants and other wildlife.",
@@ -24,6 +26,7 @@ export const blogPosts = [
         location: "Mole National Park, Northern Region, Ghana"
     },
     {
+        id: 3,
         title: "Walking Among Giants: My Kakum Canopy Walk Experience",
         date: "May 28, 2023",
         description: "Suspended 40 meters above the rainforest floor, the Kakum canopy walkway offers breathtaking views and encounters with tropical birds and wildlife.",
@@ -36,6 +39,7 @@ export const blogPosts = [
         location: "Kakum National Park, Central Region, Ghana"
     },
     {
+        id: 4,
         title: "Vibrant Nights: Exploring Accra's Thriving Music and Arts Scene",
         date: "March 5, 2023",
         description: "From live highlife music at Nubuke Foundation to contemporary art at 233 Jazz Bar, Accra's cultural scene comes alive after dark.",

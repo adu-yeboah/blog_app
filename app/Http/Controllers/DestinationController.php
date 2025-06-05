@@ -16,7 +16,7 @@ class DestinationController extends Controller
     public function index()
     {
         $destinations = Destination::with('images')->get();
-        return Inertia::render('Destination/Index', [
+        return Inertia::render('main/Destination', [
             'destinations' => $destinations->map(function ($destination) {
                 return [
                     'id' => $destination->id,

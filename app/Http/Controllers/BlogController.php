@@ -69,22 +69,23 @@ class BlogController extends Controller
     }
 
     // Show a specific blog post
-    public function show(Blog $blog)
+    public function show($id)
     {
+        $blog = Blog::with('images')->find($id);
+
         return Inertia::render('main/Blog', [
-            'blogData' => [
-                'id' => $blog->id,
-                'title' => $blog->title,
-                'date' => $blog->date,
-                'description' => $blog->description,
-                'category' => $blog->category,
-                'rating' => $blog->rating,
-                'location' => $blog->location,
-                'images' => $blog->images->pluck('path'),
-            ],
+            // 'blogData' => [
+            //     'id' => $blog->id,
+            //     'title' => $blog->title,
+            //     'date' => $blog->date,
+            //     'description' => $blog->description,
+            //     'category' => $blog->category,
+            //     'rating' => $blog->rating,
+            //     'location' => $blog->location,
+            //     'images' => $blog->images->pluck('path'),
+            // ],
         ]);
     }
-
     // Update a blog post
     public function edit(Blog $blog)
     {
