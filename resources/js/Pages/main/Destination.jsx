@@ -1,18 +1,18 @@
 import React from "react";
 import MainLayout from "../../layout/mainLayout";
 import { BlogCard } from "../../components/cards/BlogCard";
-import { blogPosts } from "../../constants/blog";
-import { DestinarionCard } from "../../components/cards/DestinationCard";
+import { Link, router, usePage } from "@inertiajs/react";
 
+export default function BlogSection() {
+    const { destination } = usePage().props;
+    const { data: blogPosts, links } = destination;
 
-export default function Destination() {
-    const [filter, setFilter] = React.useState("All");
-    const [currentPage, setCurrentPage] = React.useState(1);
-    const postsPerPage = 2;
-
-    const filteredPosts = filter === "All" ? blogPosts : blogPosts.filter(post => post.category === filter);
-    const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
-    const paginatedPosts = filteredPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
+    const handleFilterChange = (category) => {
+        router.get('/destination', { category }, {
+            preserveState: true,
+            replace: true,
+        });
+    };
 
     return (
         <MainLayout>
@@ -26,8 +26,8 @@ export default function Destination() {
                         <label htmlFor="filter" className="mr-2 text-gray-700">Filter by Category:</label>
                         <select
                             id="filter"
-                            value={filter}
-                            onChange={(e) => setFilter(e.target.value)}
+                            value={'All'}
+                            onChange={(e) => handleFilterChange(e.target.value)}
                             className="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                         >
                             <option value="All">All</option>
@@ -37,41 +37,34 @@ export default function Destination() {
                             <option value="Culture">Culture</option>
                         </select>
                     </div>
+                    
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {blogPosts.map((blog, index) => (
-                            <DestinarionCard
+                            <BlogCard
                                 key={index}
                                 data={blog}
                             />
                         ))}
                     </div>
-                    <div className="mt-8 flex justify-center space-x-4">
-                        <button
-                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                            disabled={currentPage === 1}
-                            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg disabled:opacity-50 hover:bg-gray-400"
-                        >
-                            Previous
-                        </button>
-                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                            <button
-                                key={page}
-                                onClick={() => setCurrentPage(page)}
-                                className={`px-4 py-2 ${currentPage === page ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-700'} rounded-lg hover:bg-gray-400`}
-                            >
-                                {page}
-                            </button>
+
+                    {/* Pagination */}
+                    <div className="mt-8 flex justify-center space-x-2">
+                        {links.map((link, index) => (
+                            <Link
+                                key={index}
+                                href={link.url || '#'}
+                                preserveState
+                                className={`px-4 py-2 rounded-lg ${
+                                    link.active
+                                        ? 'bg-green-600 text-white'
+                                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                } ${!link.url ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                dangerouslySetInnerHTML={{ __html: link.label }}
+                            />
                         ))}
-                        <button
-                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                            disabled={currentPage === totalPages}
-                            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg disabled:opacity-50 hover:bg-gray-400"
-                        >
-                            Next
-                        </button>
                     </div>
                 </div>
             </div>
         </MainLayout>
     );
-};
+}

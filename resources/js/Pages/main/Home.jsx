@@ -8,17 +8,24 @@ import Destination from '../../components/Destination'
 import { TravelStoriesSection } from '../../components/TravelBlogs'
 import AboutMe from '../../components/aboutSection'
 
-export default function Index() {
+export default function Index({about, destinations, blogs}) {
   return (
     <>
       <Navbar />
-      <Hero />
-      <Destination />
+      {/* Hero Section */}
+      <Hero data={about?.coverImage}/>
+
+      {/* Destination Section */}
+      <Destination destination={destinations}/>
+
       <NewsletterSection />
       {/* <Carousel /> */}
 
-      <TravelStoriesSection />
-      <AboutMe />
+      {/* featured blogs */}
+      <TravelStoriesSection destination={destinations}/>
+
+      {}
+      <AboutMe about={about}/>
       <Footer />
     </>
   )

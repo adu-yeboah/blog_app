@@ -14,23 +14,29 @@ class BlogController extends Controller
     //Route get all data in blog
     public function index()
     {
-        $posts = Blog::with('images')->where('user_id', Auth::id())->get();
+        $posts = Blog::with('images')
+            ->paginate(5)
+            ->withQueryString();
+
+        $transformedPosts = $posts->getCollection()->map(function ($post) {
+            return [
+                'id' => $post->id,
+                'title' => $post->title,
+                'date' => $post->date,
+                'description' => $post->description,
+                'category' => $post->category,
+                'rating' => $post->rating,
+                'location' => $post->location,
+                'images' => $post->images->pluck('path'),
+            ];
+        });
+
+        $posts->setCollection($transformedPosts);
+
         return Inertia::render('main/Blogs', [
-            'posts' => $posts->map(function ($post) {
-                return [
-                    'id' => $post->id,
-                    'title' => $post->title,
-                    'date' => $post->date,
-                    'description' => $post->description,
-                    'category' => $post->category,
-                    'rating' => $post->rating,
-                    'location' => $post->location,
-                    'images' => $post->images->pluck('path'),
-                ];
-            }),
+            'posts' => $posts,
         ]);
     }
-
 
     // create a blog data
     public function store(Request $request)

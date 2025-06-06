@@ -15,18 +15,27 @@ class DestinationController extends Controller
     // Display a list of destinations
     public function index()
     {
-        $destinations = Destination::with('images')->get();
+        $posts = Destination::with('images')
+            ->paginate(5)
+            ->withQueryString();
+
+        $transformedPosts = $posts->getCollection()->map(function ($post) {
+            return [
+                'id' => $post->id,
+                'title' => $post->title,
+                'date' => $post->date,
+                'description' => $post->description,
+                'category' => $post->category,
+                'rating' => $post->rating,
+                'location' => $post->location,
+                'images' => $post->images->pluck('path'),
+            ];
+        });
+
+        $posts->setCollection($transformedPosts);
+
         return Inertia::render('main/Destination', [
-            'destinations' => $destinations->map(function ($destination) {
-                return [
-                    'id' => $destination->id,
-                    'title' => $destination->title,
-                    'rating' => $destination->rating,
-                    'description' => $destination->description,
-                    'location' => $destination->location,
-                    'images' => $destination->images->pluck('path'),
-                ];
-            }),
+            'destination' => $posts,
         ]);
     }
 

@@ -74,7 +74,7 @@ const Chart = () => {
   };
 
   return (
-    <div style={{ width: '70vw', height: '60vh', margin: '0px 45px', borderRadius: "9px",  background: "white"}}>
+    <div style={{ width: '60vw', height: '60vh', margin: '0px 45px', borderRadius: "9px",  background: "white"}}>
       <Bar data={data} options={options} />
     </div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { MapPin, Camera, Utensils } from 'lucide-react';
 
-export default function AboutMe() {
+export default function AboutMe({ about }) {
     return (
         <section className="py-27 px-4 sm:px-6 lg:px-8 bg-white">
             <div className="px-4 md:px-10 mx-auto text-center flex flex-row justify-between">
@@ -26,20 +26,7 @@ export default function AboutMe() {
                         Through this blog, I hope to inspire both locals and visitors to discover Ghana's rich
                         culture, breathtaking landscapes, and warm hospitality that makes our country so special.
                     </p>
-                    <div className="flex justify-center space-x-8 text-gray-600">
-                        <div className="flex items-center space-x-2">
-                            <MapPin className="w-6 h-6 text-green-500" />
-                            <span>16 Regions Explored</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <Camera className="w-6 h-6 text-green-500" />
-                            <span>8K+ Photos</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <Utensils className="w-6 h-6 text-green-500" />
-                            <span>Countless Fufu Meals</span>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </section>
