@@ -8,7 +8,7 @@ export default function AdminLayout({ children }) {
             <div className='bg-gray-200 min-h-[110vh]'>
                 <Sidebar />
                 <Topbar />
-                <main className='ml-[180px] '>
+                <main className='ml-[220px] '>
                     {children}
                 </main>
             </div>

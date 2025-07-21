@@ -1,7 +1,7 @@
 import React from 'react';
-import { useForm } from '@inertiajs/inertia-react';
 import AdminLayout from '../../layout/adminLayout';
 import Head from '../../components/ui/Head';
+import { useForm } from '@inertiajs/react';
 
 const NewsletterIndex = ({ subscribers }) => {
     const { data, setData, post, processing, errors } = useForm({
